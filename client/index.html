@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NextEdu — Find The Best Campus In The World</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link id="highlight-theme" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body class="relative min-h-screen flex flex-col">
+
+  <!-- 1. ANNOUNCEMENT BAR -->
+  <div class="announcement-bar w-full py-2">
+    <div class="container-custom flex justify-between items-center text-scale-xs text-gray-600 dark:text-gray-300">
+      <div class="font-medium flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        Submit now for September enrollment
+      </div>
+      <div class="relative inline-block text-left">
+        <select id="language-selector" class="bg-transparent border border-gray-300 dark:border-gray-600 rounded-md px-2 py-1 text-scale-xs text-gray-700 dark:text-gray-200 cursor-pointer focus:outline-none focus:ring-1 focus:ring-emerald-500">
+          <option value="en" class="dark:bg-gray-800">🇬🇧 English</option>
+          <option value="id" class="dark:bg-gray-800">🇮🇩 Indonesia</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. MENU BAR -->
+  <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-gray-200 dark:border-slate-800 transition-colors">
+    <div class="container-custom py-3.5 flex items-center justify-between">
+
+      <a href="#home" class="flex items-center gap-2.5 group">
+        <span class="text-scale-xl p-1.5 rounded-lg bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 group-hover:scale-105 transition-transform">🎓</span>
+        <div>
+          <span class="text-scale-lg font-bold text-gray-900 dark:text-white tracking-tight">NextEdu</span>
+          <span class="block text-scale-xs text-emerald-600 dark:text-emerald-400 font-semibold uppercase tracking-wider">Global Education</span>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-8 text-scale-sm font-medium">
+        <a href="#home" class="text-gray-700 dark:text-gray-200 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Home</a>
+        <a href="#campuses" class="text-gray-700 dark:text-gray-200 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Campuses</a>
+        <a href="#majors" class="text-gray-700 dark:text-gray-200 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Favourite Majors</a>
+        <a href="#contact" class="text-gray-700 dark:text-gray-200 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Contact Us</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <button id="theme-toggle" class="p-2 rounded-full border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors" aria-label="Toggle Theme">
+          <svg id="icon-moon" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z"/></svg>
+          <svg id="icon-sun" class="w-4 h-4 hidden" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"/></svg>
+        </button>
+        <button id="open-widget-btn-nav" class="hidden sm:inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-scale-xs font-semibold px-4 py-2 rounded-full transition-all shadow-sm">
+          <span>💬 Chat Assistant</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <main class="flex-1">
+
+    <!-- 3. HERO SECTION -->
+    <section id="home" class="hero-banner py-20 lg:py-28 flex items-center border-b border-gray-200 dark:border-slate-800">
+      <div class="container-custom">
+        <div class="max-w-2xl">
+          <h4 class="text-scale-md font-bold text-emerald-600 dark:text-emerald-400 tracking-wider uppercase mb-3">
+            START YOUR NEW EDUCATION JOURNEY
+          </h4>
+          <h1 class="text-scale-3xl sm:text-scale-4xl font-black text-gray-900 dark:text-white leading-tight tracking-tight mb-4">
+            FIND THE BEST CAMPUS IN THE WORLD
+          </h1>
+          <p class="text-scale-lg text-gray-600 dark:text-gray-300 font-normal leading-relaxed mb-8">
+            Ask our chatbot for the desired information in higher education, entry requirements, scholarships, and international study programs.
+          </p>
+          <div class="flex flex-wrap items-center gap-4">
+            <button id="open-widget-btn-hero" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-scale-base px-6 py-3 rounded-xl shadow-lg transition-all hover:scale-105 flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+              Ask AI Assistant
+            </button>
+            <a href="#campuses" class="bg-white/80 dark:bg-slate-800/80 hover:bg-white dark:hover:bg-slate-800 text-gray-800 dark:text-gray-200 font-semibold text-scale-base px-6 py-3 rounded-xl border border-gray-300 dark:border-slate-700 transition-all">
+              Explore Campuses
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. FEATURED CAMPUSES -->
+    <section id="campuses" class="py-16 bg-gray-50/50 dark:bg-slate-900/50 border-b border-gray-200 dark:border-slate-800">
+      <div class="container-custom">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-10">
+          <div>
+            <h2 class="text-scale-2xl font-bold text-gray-900 dark:text-white mb-2">Featured Campuses</h2>
+            <p class="text-scale-sm text-gray-500 dark:text-gray-400">Discover top-tier accredited universities across global educational hubs</p>
+          </div>
+          <span class="text-scale-xs font-semibold text-emerald-600 dark:text-emerald-400 mt-2 sm:mt-0">4 Top Choices</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          <div class="card-hover-effect bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-6 flex flex-col justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-950/60 text-blue-600 flex items-center justify-center text-scale-xl font-bold mb-4">🏛️</div>
+              <span class="text-scale-xs uppercase font-semibold text-gray-400 dark:text-gray-500">United States</span>
+              <h3 class="text-scale-md font-bold text-gray-900 dark:text-white mt-1 mb-2">Harvard University</h3>
+              <p class="text-scale-xs text-gray-500 dark:text-gray-400">Cambridge, Massachusetts</p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-gray-100 dark:border-slate-700/60 flex items-center justify-between text-scale-xs">
+              <span class="font-medium text-emerald-600 dark:text-emerald-400">150+ Majors</span>
+              <span class="bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 px-2 py-0.5 rounded">Rank #1</span>
+            </div>
+          </div>
+
+          <div class="card-hover-effect bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-6 flex flex-col justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-amber-100 dark:bg-amber-950/60 text-amber-600 flex items-center justify-center text-scale-xl font-bold mb-4">🏰</div>
+              <span class="text-scale-xs uppercase font-semibold text-gray-400 dark:text-gray-500">United Kingdom</span>
+              <h3 class="text-scale-md font-bold text-gray-900 dark:text-white mt-1 mb-2">University of Oxford</h3>
+              <p class="text-scale-xs text-gray-500 dark:text-gray-400">Oxford, England</p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-gray-100 dark:border-slate-700/60 flex items-center justify-between text-scale-xs">
+              <span class="font-medium text-emerald-600 dark:text-emerald-400">120+ Majors</span>
+              <span class="bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 px-2 py-0.5 rounded">Rank #3</span>
+            </div>
+          </div>
+
+          <div class="card-hover-effect bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-6 flex flex-col justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-red-100 dark:bg-red-950/60 text-red-600 flex items-center justify-center text-scale-xl font-bold mb-4">🦁</div>
+              <span class="text-scale-xs uppercase font-semibold text-gray-400 dark:text-gray-500">Singapore</span>
+              <h3 class="text-scale-md font-bold text-gray-900 dark:text-white mt-1 mb-2">National University of Singapore</h3>
+              <p class="text-scale-xs text-gray-500 dark:text-gray-400">Kent Ridge, Singapore</p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-gray-100 dark:border-slate-700/60 flex items-center justify-between text-scale-xs">
+              <span class="font-medium text-emerald-600 dark:text-emerald-400">95+ Majors</span>
+              <span class="bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 px-2 py-0.5 rounded">Rank #8</span>
+            </div>
+          </div>
+
+          <div class="card-hover-effect bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-6 flex flex-col justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center text-scale-xl font-bold mb-4">🇮🇩</div>
+              <span class="text-scale-xs uppercase font-semibold text-gray-400 dark:text-gray-500">Indonesia</span>
+              <h3 class="text-scale-md font-bold text-gray-900 dark:text-white mt-1 mb-2">Universitas Indonesia</h3>
+              <p class="text-scale-xs text-gray-500 dark:text-gray-400">Depok, West Java</p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-gray-100 dark:border-slate-700/60 flex items-center justify-between text-scale-xs">
+              <span class="font-medium text-emerald-600 dark:text-emerald-400">85+ Majors</span>
+              <span class="bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 px-2 py-0.5 rounded">Top National</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. FAVOURITE MAJORS -->
+    <section id="majors" class="py-16 border-b border-gray-200 dark:border-slate-800">
+      <div class="container-custom">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-10">
+          <div>
+            <h2 class="text-scale-2xl font-bold text-gray-900 dark:text-white mb-2">Favourite Majors</h2>
+            <p class="text-scale-sm text-gray-500 dark:text-gray-400">Explore high-demand academic pathways and career opportunities</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+          <div class="card-hover-effect bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl overflow-hidden flex flex-col justify-between">
+            <div>
+              <div class="thumbnail-aspect bg-gray-200 dark:bg-slate-700">
+                <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80" alt="Computer Science" class="w-full h-full object-cover" />
+                <span class="absolute top-3 right-3 bg-slate-900/80 backdrop-blur-sm text-white text-scale-xs px-2.5 py-1 rounded-full font-medium">STEM</span>
+              </div>
+              <div class="p-5">
+                <div class="flex items-center gap-1.5 text-amber-500 text-scale-xs font-semibold mb-2"><span>★ 4.9</span><span class="text-gray-400 dark:text-gray-500 font-normal">(2,430 saved)</span></div>
+                <h3 class="text-scale-md font-bold text-gray-900 dark:text-white mb-2">Computer Science & AI</h3>
+                <p class="text-scale-xs text-gray-500 dark:text-gray-400 line-clamp-2">Algorithms, machine learning, software architecture, and full-stack development.</p>
+              </div>
+            </div>
+            <div class="p-5 pt-0">
+              <button onclick="showMajorDetails('Computer Science & AI', 'High Demand | Average Graduate Salary $95,000/yr')" class="w-full bg-gray-100 hover:bg-emerald-600 hover:text-white dark:bg-slate-700 dark:hover:bg-emerald-600 text-gray-800 dark:text-gray-200 text-scale-xs font-semibold py-2.5 rounded-xl transition-colors">Details</button>
+            </div>
+          </div>
+
+          <div class="card-hover-effect bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl overflow-hidden flex flex-col justify-between">
+            <div>
+              <div class="thumbnail-aspect bg-gray-200 dark:bg-slate-700">
+                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" alt="Business Administration" class="w-full h-full object-cover" />
+                <span class="absolute top-3 right-3 bg-slate-900/80 backdrop-blur-sm text-white text-scale-xs px-2.5 py-1 rounded-full font-medium">Business</span>
+              </div>
+              <div class="p-5">
+                <div class="flex items-center gap-1.5 text-amber-500 text-scale-xs font-semibold mb-2"><span>★ 4.8</span><span class="text-gray-400 dark:text-gray-500 font-normal">(1,890 saved)</span></div>
+                <h3 class="text-scale-md font-bold text-gray-900 dark:text-white mb-2">Business & Management</h3>
+                <p class="text-scale-xs text-gray-500 dark:text-gray-400 line-clamp-2">Entrepreneurship, global finance, strategic marketing, and corporate governance.</p>
+              </div>
+            </div>
+            <div class="p-5 pt-0">
+              <button onclick="showMajorDetails('Business & Management', 'Versatile Career Pathways | Global Exchange Options')" class="w-full bg-gray-100 hover:bg-emerald-600 hover:text-white dark:bg-slate-700 dark:hover:bg-emerald-600 text-gray-800 dark:text-gray-200 text-scale-xs font-semibold py-2.5 rounded-xl transition-colors">Details</button>
+            </div>
+          </div>
+
+          <div class="card-hover-effect bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl overflow-hidden flex flex-col justify-between">
+            <div>
+              <div class="thumbnail-aspect bg-gray-200 dark:bg-slate-700">
+                <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80" alt="Medicine & Health" class="w-full h-full object-cover" />
+                <span class="absolute top-3 right-3 bg-slate-900/80 backdrop-blur-sm text-white text-scale-xs px-2.5 py-1 rounded-full font-medium">Health</span>
+              </div>
+              <div class="p-5">
+                <div class="flex items-center gap-1.5 text-amber-500 text-scale-xs font-semibold mb-2"><span>★ 4.95</span><span class="text-gray-400 dark:text-gray-500 font-normal">(3,120 saved)</span></div>
+                <h3 class="text-scale-md font-bold text-gray-900 dark:text-white mb-2">Medicine & Health Sciences</h3>
+                <p class="text-scale-xs text-gray-500 dark:text-gray-400 line-clamp-2">Biomedical research, clinical practice, public health, and digital healthcare.</p>
+              </div>
+            </div>
+            <div class="p-5 pt-0">
+              <button onclick="showMajorDetails('Medicine & Health Sciences', 'Pre-Med Tracks | Clinical Internships Included')" class="w-full bg-gray-100 hover:bg-emerald-600 hover:text-white dark:bg-slate-700 dark:hover:bg-emerald-600 text-gray-800 dark:text-gray-200 text-scale-xs font-semibold py-2.5 rounded-xl transition-colors">Details</button>
+            </div>
+          </div>
+
+          <div class="card-hover-effect bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl overflow-hidden flex flex-col justify-between">
+            <div>
+              <div class="thumbnail-aspect bg-gray-200 dark:bg-slate-700">
+                <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=600&q=80" alt="Digital Media Design" class="w-full h-full object-cover" />
+                <span class="absolute top-3 right-3 bg-slate-900/80 backdrop-blur-sm text-white text-scale-xs px-2.5 py-1 rounded-full font-medium">Arts</span>
+              </div>
+              <div class="p-5">
+                <div class="flex items-center gap-1.5 text-amber-500 text-scale-xs font-semibold mb-2"><span>★ 4.7</span><span class="text-gray-400 dark:text-gray-500 font-normal">(1,450 saved)</span></div>
+                <h3 class="text-scale-md font-bold text-gray-900 dark:text-white mb-2">UI/UX & Digital Arts</h3>
+                <p class="text-scale-xs text-gray-500 dark:text-gray-400 line-clamp-2">Product design, user research, motion graphics, and interactive digital media.</p>
+              </div>
+            </div>
+            <div class="p-5 pt-0">
+              <button onclick="showMajorDetails('UI/UX & Digital Arts', 'Creative Industry Focus | Studio Portfolio Guidance')" class="w-full bg-gray-100 hover:bg-emerald-600 hover:text-white dark:bg-slate-700 dark:hover:bg-emerald-600 text-gray-800 dark:text-gray-200 text-scale-xs font-semibold py-2.5 rounded-xl transition-colors">Details</button>
+            </div>
+          </div>
+
+          <div class="card-hover-effect bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl overflow-hidden flex flex-col justify-between">
+            <div>
+              <div class="thumbnail-aspect bg-gray-200 dark:bg-slate-700">
+                <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80" alt="Robotics & Mechanical" class="w-full h-full object-cover" />
+                <span class="absolute top-3 right-3 bg-slate-900/80 backdrop-blur-sm text-white text-scale-xs px-2.5 py-1 rounded-full font-medium">Engineering</span>
+              </div>
+              <div class="p-5">
+                <div class="flex items-center gap-1.5 text-amber-500 text-scale-xs font-semibold mb-2"><span>★ 4.85</span><span class="text-gray-400 dark:text-gray-500 font-normal">(2,110 saved)</span></div>
+                <h3 class="text-scale-md font-bold text-gray-900 dark:text-white mb-2">Robotics & Mechatronics</h3>
+                <p class="text-scale-xs text-gray-500 dark:text-gray-400 line-clamp-2">Automation, embedded systems, drone technology, and smart manufacturing.</p>
+              </div>
+            </div>
+            <div class="p-5 pt-0">
+              <button onclick="showMajorDetails('Robotics & Mechatronics', 'Hands-on Lab Training | Industry Sponsored Projects')" class="w-full bg-gray-100 hover:bg-emerald-600 hover:text-white dark:bg-slate-700 dark:hover:bg-emerald-600 text-gray-800 dark:text-gray-200 text-scale-xs font-semibold py-2.5 rounded-xl transition-colors">Details</button>
+            </div>
+          </div>
+
+          <div class="card-hover-effect bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl overflow-hidden flex flex-col justify-between">
+            <div>
+              <div class="thumbnail-aspect bg-gray-200 dark:bg-slate-700">
+                <img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=600&q=80" alt="Environmental Science" class="w-full h-full object-cover" />
+                <span class="absolute top-3 right-3 bg-slate-900/80 backdrop-blur-sm text-white text-scale-xs px-2.5 py-1 rounded-full font-medium">Sustainability</span>
+              </div>
+              <div class="p-5">
+                <div class="flex items-center gap-1.5 text-amber-500 text-scale-xs font-semibold mb-2"><span>★ 4.75</span><span class="text-gray-400 dark:text-gray-500 font-normal">(1,200 saved)</span></div>
+                <h3 class="text-scale-md font-bold text-gray-900 dark:text-white mb-2">Environmental Engineering</h3>
+                <p class="text-scale-xs text-gray-500 dark:text-gray-400 line-clamp-2">Renewable energy, climate solutions, sustainable urban planning, and ecology.</p>
+              </div>
+            </div>
+            <div class="p-5 pt-0">
+              <button onclick="showMajorDetails('Environmental Engineering', 'Global Green Fellowships Available')" class="w-full bg-gray-100 hover:bg-emerald-600 hover:text-white dark:bg-slate-700 dark:hover:bg-emerald-600 text-gray-800 dark:text-gray-200 text-scale-xs font-semibold py-2.5 rounded-xl transition-colors">Details</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. CONTACT US SECTION -->
+    <section id="contact" class="py-16 bg-gray-50/50 dark:bg-slate-900/50 border-b border-gray-200 dark:border-slate-800">
+      <div class="container-custom">
+        <h2 class="text-scale-2xl font-bold text-gray-900 dark:text-white mb-8">Contact Us</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+          <div class="lg:col-span-7 bg-white dark:bg-slate-800 p-2 rounded-2xl border border-gray-200 dark:border-slate-700 shadow-sm overflow-hidden h-[340px]">
+            <iframe
+              title="NextEdu building Location Map"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.811568285918!2d106.7972765!3d-6.2884933!2m3!1f0!2f0!3f0!2m3!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f1ec5f791ef7%3A0xd68bc3e5b3f11b22!2sCilandak%20Town%20Square!5e0!3m2!1sen!2sid!4v1700000000000!5m2!1sen!2sid"
+              class="w-full h-full rounded-xl border-0"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+
+          <div class="lg:col-span-5 bg-white dark:bg-slate-800 p-8 rounded-2xl border border-gray-200 dark:border-slate-700 shadow-sm flex flex-col justify-between h-[340px]">
+            <div>
+              <h3 class="text-scale-lg font-bold text-emerald-600 dark:text-emerald-400 mb-4">NextEdu building</h3>
+              <ul class="space-y-3 text-scale-sm text-gray-600 dark:text-gray-300">
+                <li class="flex items-start gap-3"><span class="text-scale-md">📍</span><span>Cilandak Town Square, Jl. T.B. Simatupang No.17, Cilandak, South Jakarta 12430</span></li>
+                <li class="flex items-center gap-3"><span class="text-scale-md">📞</span><span>+62 21 555 0199</span></li>
+                <li class="flex items-center gap-3"><span class="text-scale-md">✉️</span><span>admissions@nextedu.ac.id</span></li>
+              </ul>
+            </div>
+            <div>
+              <p class="text-scale-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-3">Connect With Us</p>
+              <div class="flex items-center gap-4 text-gray-600 dark:text-gray-300">
+                <a href="#contact" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-slate-700 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-colors" aria-label="Facebook">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.891h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
+                </a>
+                <a href="#contact" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-slate-700 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-colors" aria-label="YouTube">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+                <a href="#contact" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-slate-700 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-colors" aria-label="Instagram">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 7. FOOTER -->
+  <footer class="bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-slate-800 py-12 transition-colors">
+    <div class="container-custom">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+
+        <div class="md:col-span-1">
+          <a href="#home" class="flex items-center gap-2 mb-3">
+            <span class="text-scale-xl">🎓</span>
+            <span class="text-scale-lg font-bold text-gray-900 dark:text-white">NextEdu</span>
+          </a>
+          <p class="text-scale-xs text-gray-500 dark:text-gray-400 leading-relaxed mb-4">
+            Empowering students worldwide to discover premier higher education options and scholarship opportunities.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="text-scale-xs font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-3">Navigation</h4>
+          <ul class="space-y-2 text-scale-xs text-gray-500 dark:text-gray-400">
+            <li><a href="#home" class="hover:text-emerald-600 dark:hover:text-emerald-400">Home</a></li>
+            <li><a href="#campuses" class="hover:text-emerald-600 dark:hover:text-emerald-400">Featured Campuses</a></li>
+            <li><a href="#majors" class="hover:text-emerald-600 dark:hover:text-emerald-400">Favourite Majors</a></li>
+            <li><a href="#contact" class="hover:text-emerald-600 dark:hover:text-emerald-400">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-scale-xs font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-3">Resources</h4>
+          <ul class="space-y-2 text-scale-xs text-gray-500 dark:text-gray-400">
+            <li><a href="#" class="hover:text-emerald-600 dark:hover:text-emerald-400">Scholarship Guide 2026</a></li>
+            <li><a href="#" class="hover:text-emerald-600 dark:hover:text-emerald-400">Admission Criteria</a></li>
+            <li><a href="#" class="hover:text-emerald-600 dark:hover:text-emerald-400">IELTS & TOEFL Prep</a></li>
+            <li><a href="#" class="hover:text-emerald-600 dark:hover:text-emerald-400">Student Visa Info</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-scale-xs font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-3">Stay Updated</h4>
+          <p class="text-scale-xs text-gray-500 dark:text-gray-400 mb-3">Get September enrollment news direct to your inbox.</p>
+          <div class="flex gap-2">
+            <input type="email" placeholder="Your email..." class="w-full text-scale-xs px-3 py-2 bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg text-gray-800 dark:text-gray-200 focus:outline-none focus:border-emerald-500" />
+            <button onclick="alert('Thank you for subscribing!')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-scale-xs font-semibold px-3 py-2 rounded-lg transition-colors">Join</button>
+          </div>
+        </div>
+
+      </div>
+      <div class="pt-6 border-t border-gray-100 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-center text-scale-xs text-gray-400">
+        <p>© 2026 NextEdu Education Group. All rights reserved.</p>
+        <p class="mt-2 sm:mt-0">Designed for Next-Gen Scholars</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BACK TO TOP BUTTON -->
+  <button id="back-to-top" class="back-to-top-btn" aria-label="Back to Top">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+  </button>
+
+  <!-- CHATBOT WIDGET TOGGLE BUTTON -->
+  <button id="widget-toggle" class="widget-toggle-btn" aria-label="Toggle Chatbot Widget">
+    <svg id="widget-icon-chat" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+    <svg id="widget-icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+  </button>
+
+  <!-- CHATBOT POPUP WIDGET CONTAINER -->
+  <div id="chat-widget" class="chat-widget-container closed">
+
+    <div class="p-4 border-b border-gray-200 dark:border-slate-700 flex items-center justify-between bg-white dark:bg-slate-800">
+      <div class="flex items-center gap-2.5">
+        <span class="text-scale-lg p-1 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-600">🎓</span>
+        <div>
+          <h4 class="text-scale-sm font-bold text-gray-900 dark:text-white leading-tight">NextEdu AI</h4>
+          <span class="text-scale-xs text-emerald-600 dark:text-emerald-400 font-medium flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse"></span> Online
+          </span>
+        </div>
+      </div>
+      <button id="close-widget-btn" class="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div id="chat-box" class="chat-box"></div>
+
+    <div class="p-3 border-t border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+      <form id="chat-form" class="flex items-center gap-2 bg-gray-100 dark:bg-slate-700/60 p-1.5 pl-3 rounded-full border border-gray-200 dark:border-slate-600 focus-within:border-emerald-500">
+        <input
+          type="text"
+          id="user-input"
+          class="flex-1 bg-transparent border-0 outline-none text-scale-xs text-gray-900 dark:text-white placeholder-gray-400"
+          placeholder="Ask about admission, fees, or majors..."
+          autocomplete="off"
+          required
+        />
+        <button type="submit" class="w-8 h-8 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white flex items-center justify-center transition-colors flex-shrink-0">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z"/></svg>
+        </button>
+      </form>
+      <p class="text-[10px] text-gray-400 text-center mt-1.5">NextEdu AI may provide general estimates. Verify details with campus offices.</p>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/highlight.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
